@@ -6,7 +6,7 @@
 /*   By: axcallet <axcallet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 13:23:10 by axcallet          #+#    #+#             */
-/*   Updated: 2023/03/01 10:15:12 by axcallet         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:34:20 by axcallet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	main(int argc, char **argv, char **envp)
 t_data	*init_data(char **argv, char **envp)
 {
 	t_data	*data;
-	int		fd_1;
-	int		fd_2;
 
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -45,11 +43,11 @@ t_data	*init_data(char **argv, char **envp)
 		ft_putstr_fd("Error malloc struct\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	fd_1 = open(argv[1], O_RDONLY);
-	fd_2 = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd_1 < 0)
+	data->fd_1 = open(argv[1], O_RDONLY);
+	data->fd_2 = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (data->fd_1 < 0)
 		ft_putstr_fd("Error open\n", 2);
-	if (fd_2 < 0)
+	if (data->fd_2 < 0)
 	{
 		ft_putstr_fd("Error open\n", 2);
 		free(data);
@@ -57,8 +55,6 @@ t_data	*init_data(char **argv, char **envp)
 	}
 	data->argv = argv;
 	data->envp = envp;
-	data->fd_1 = fd_1;
-	data->fd_2 = fd_2;
 	data->cmd_1 = ft_split(argv[2], ' ');
 	data->cmd_2 = ft_split(argv[3], ' ');
 	return (data);
